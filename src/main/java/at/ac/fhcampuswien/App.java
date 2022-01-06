@@ -15,11 +15,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        int index = Utilities.randomGenerator(3);
-        String[] imageArray = new String[]{"Image_01.png", "Image_02.png", "Image_03.png"};
-        Image front = new Image(App.class.getResource(imageArray[index]).toString(), 100, 30, true,false);
 
-        Card card = new Card(front);
+        //Card card = new Card(front);
 
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Game_UI.fxml")); //macht GUI aus FXML file
 
@@ -27,15 +24,7 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 600, 620);
         stage.setTitle("Memory");
         stage.setScene(scene);
-        GridPane grid = (GridPane) scene.lookup("#Grid_Memory"); // Sucht das Element mit der Id Grid_Memory, expliciter cast
-        Button button = new Button();
-        grid.add(button, 0, 0);
-        button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // button fills cell
-        button.setOnAction(actionEvent -> {
-            Button eventButton = (Button) actionEvent.getSource(); //findet den Button der gedrückt wurde
-
-            eventButton.setGraphic(new ImageView(front));
-        }); // was passieren soll, wenn man auf den Button clickt
+        //GridPane grid = (GridPane) scene.lookup("#Grid_Memory"); // Sucht das Element mit der Id Grid_Memory, expliciter cast
 
         Label label = (Label) scene.lookup("#label_PlayerOneScore");
         label.setText("Score Player Slavica: 1");
