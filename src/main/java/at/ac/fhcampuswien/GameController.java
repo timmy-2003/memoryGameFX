@@ -2,6 +2,7 @@ package at.ac.fhcampuswien;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -10,6 +11,8 @@ public class GameController {
     @FXML
     private GridPane Grid_Memory;
     private Button[] buttons;
+
+    @FXML private Label label_CurrentPlayer;
 
     private Memory memory;
 
@@ -60,6 +63,11 @@ public class GameController {
         else {
             buttons[index].setGraphic(new ImageView(card.getBackground()));
         }
+    }
+
+    @FXML
+    public void setLabel_CurrentPlayer(String s){
+        label_CurrentPlayer.setText(s);
     }
 
 

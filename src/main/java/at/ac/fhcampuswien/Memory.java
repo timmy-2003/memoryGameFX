@@ -10,6 +10,8 @@ public class Memory {
     private Player player1;
     private Player player2;
     private Card[] memoryCards; //alle Karten des Spiels
+    private Card selectedCard;
+    private Player currentPlayer;
 
     public Memory(String[] images){
         this.board = new Board();
@@ -26,6 +28,7 @@ public class Memory {
     public Board getBoard(){           // diese Methode liefert ein Board
         return board;
     }
+
 
     public void newGame(){
 
@@ -51,4 +54,34 @@ public class Memory {
 
     }
 
+    public boolean checkIfMatch(Player p, Card card1, Card card2){
+        if (card1.equals(card2)){
+            p.getCollectedCards().add(card1);
+            p.getCollectedCards().add(card2);
+            p.setPoints();
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public void selectCard(int index){
+        if (selectedCard == null){
+            selectedCard = board.getCard(index);
+        }else {
+            if (checkIfMatch(currentPlayer, selectedCard, board.getCard(index))){
+
+            }
+        }
+    }
+
+    public boolean checkIfEnd(){
+        for (int i = 0; i < board.getCardCount(); i++) {
+            if (!board.getCardState(i)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

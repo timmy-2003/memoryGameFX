@@ -6,6 +6,7 @@ public class Card {
     private Image front;
     private static Image background = new Image(App.class.getResourceAsStream("background.png"), 100, 30, false, false);
 
+
     public Card(Image front) {
         this.front = front;
     }
