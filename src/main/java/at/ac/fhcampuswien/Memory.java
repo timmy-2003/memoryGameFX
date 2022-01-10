@@ -10,7 +10,11 @@ public class Memory {
     private Player player1;
     private Player player2;
     private Card[] memoryCards; //alle Karten des Spiels
-    private Card selectedCard;
+    private Card firstSelectedCard;
+    private int firstSelectedIndex;
+    private Card secondSelectedCard;
+    private int secondSelectedIndex;
+
     private Player currentPlayer;
 
     public Memory(String[] images){
@@ -54,10 +58,10 @@ public class Memory {
 
     }
 
-    public boolean checkIfMatch(Player p, Card card1, Card card2){
-        if (card1.equals(card2)){
-            p.getCollectedCards().add(card1);
-            p.getCollectedCards().add(card2);
+    public boolean checkIfMatch(Player p, Card firstSelectedCard, Card secondSelectedCard){
+        if (firstSelectedCard.equals(secondSelectedCard)){
+            p.getCollectedCards().add(firstSelectedCard);
+            p.getCollectedCards().add(secondSelectedCard);
             p.setPoints();
             return true;
         }else{
@@ -66,15 +70,38 @@ public class Memory {
 
     }
 
-    public void selectCard(int index){
-        if (selectedCard == null){
-            selectedCard = board.getCard(index);
+    public void switchPlayer (){
+        if (currentPlayer == player1){
+            currentPlayer = player2;
         }else {
-            if (checkIfMatch(currentPlayer, selectedCard, board.getCard(index))){
-
-            }
+            currentPlayer = player1;
         }
     }
+
+
+
+
+    public void selectCard(int index) { //die Logik die passiert, wenn man eine Karte anwählt
+        if (board.isOpen(index)) {
+            return;
+        }
+
+        if(firstSelectedCard != null && secondSelectedCard != null){
+            return;
+        }
+        if (firstSelectedCard == null) {
+            firstSelectedCard = board.getCard(index);
+            firstSelectedIndex = index;
+            board.setCardState(index, true);
+        } else {
+            secondSelectedCard = board.getCard(index);
+            secondSelectedIndex = index;
+            board.setCardState(index, true);
+        }
+    }
+
+
+
 
     public boolean checkIfEnd(){
         for (int i = 0; i < board.getCardCount(); i++) {
@@ -83,5 +110,33 @@ public class Memory {
             }
         }
         return true;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public Card getFirstSelectedCard() {
+        return firstSelectedCard;
+    }
+
+    public Card getSecondSelectedCard() {
+        return secondSelectedCard;
+    }
+
+    public void setFirstSelectedCard(Card firstSelectedCard) {
+        this.firstSelectedCard = firstSelectedCard;
+    }
+
+    public void setSecondSelectedCard(Card secondSelectedCard) {
+        this.secondSelectedCard = secondSelectedCard;
+    }
+
+    public int getFirstSelectedIndex() {
+        return firstSelectedIndex;
+    }
+
+    public int getSecondSelectedIndex() {
+        return secondSelectedIndex;
     }
 }

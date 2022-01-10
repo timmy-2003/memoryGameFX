@@ -46,12 +46,21 @@ public class GameController {
     }
 
     public void clickOnButton(int index){
-        if (memory.getBoard().isOpen(index)){
+        memory.selectCard(index);
+        refreshButton(index);
+        memory.setFirstSelectedCard(null);
+        memory.setSecondSelectedCard(null);
+
+        memory.switchPlayer();
+
+
+
+        /*if (memory.getBoard().isOpen(index)){
             memory.getBoard().setCardState(index, false);
         }
         else {
             memory.getBoard().setCardState(index, true);
-        }
+        }*/
         refreshButton(index);
     }
 
