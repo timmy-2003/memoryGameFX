@@ -101,8 +101,6 @@ public class Memory {
     }
 
 
-
-
     public boolean checkIfEnd(){
         for (int i = 0; i < board.getCardCount(); i++) {
             if (!board.getCardState(i)){

@@ -7,21 +7,37 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+
+
+
 public class GameController {
     @FXML
     private GridPane Grid_Memory;
     private Button[] buttons;
 
     @FXML private Label label_CurrentPlayer;
+    @FXML private Button newGameButton;
+    @FXML private Label label_PlayerOneScore, label_PlayerTwoScore;
+
+    Timer timer = new Timer();
 
     private Memory memory;
-
+    private Board board;
     @FXML
     public void initialize() {                         //diese Methode wird ausgeführt sobald das Gui geladen ist
         String[] imageArray = new String[]{"Image_01.png", "Image_02.png", "Image_03.png"};
         buttons = new Button[Grid_Memory.getRowCount()*Grid_Memory.getColumnCount()];
 
+        Player player1 = new Player(null, 0);
+        Player player2 = new Player(null, 0);
+
+
+
         memory = new Memory(imageArray);
+        board = new Board();
 
         memory.newGame();
 
@@ -45,24 +61,28 @@ public class GameController {
 
     }
 
-    public void clickOnButton(int index){
+    public void clickOnButton(int index) {
         memory.selectCard(index);
         refreshButton(index);
-        memory.setFirstSelectedCard(null);
-        memory.setSecondSelectedCard(null);
 
-        memory.switchPlayer();
+        if(memory.checkIfMatch(memory.getCurrentPlayer(), memory.getFirstSelectedCard(), memory.getSecondSelectedCard())){
+            memory.selectCard(index);
+            memory.setFirstSelectedCard(null);
+            memory.setSecondSelectedCard(null);
 
+        }else {
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    board.setCardState(memory.getFirstSelectedIndex(), false);
+                    board.setCardState(memory.getSecondSelectedIndex(), false);
 
-
-        /*if (memory.getBoard().isOpen(index)){
-            memory.getBoard().setCardState(index, false);
+                }
+            }, 2000);
         }
-        else {
-            memory.getBoard().setCardState(index, true);
-        }*/
         refreshButton(index);
     }
+
 
     public void refreshButton(int index){   //synchronisiert den Zustand der Karte, logik über den zustand(wann Vorderseite, wann Rückseite angezeigt werden soll)
         Card card = memory.getBoard().getCard(index);
@@ -74,10 +94,27 @@ public class GameController {
         }
     }
 
-    @FXML
-    public void setLabel_CurrentPlayer(String s){
+
+    /*@FXML public void setLabel_CurrentPlayer(String s){
         label_CurrentPlayer.setText(s);
     }
+*/
+
+    @FXML public void clickNewGame(){
+        initialize();
+    }
+
+    @FXML public void setLabel_PlayerOneScore(int points){
+        label_PlayerOneScore.setText(String.valueOf(points));
+    }
+
+    @FXML public void setLabel_PlayerTwoScore(int points){
+        label_PlayerTwoScore.setText(String.valueOf(points));
+    }
+
+
+
+
 
 
 }

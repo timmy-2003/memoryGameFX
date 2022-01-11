@@ -6,9 +6,11 @@ public class Player {
     private ArrayList <Card> collectedCards;
     private int points;
 
+
     public Player(ArrayList<Card> collectedCards, int points) {
         this.collectedCards = collectedCards;
         this.points = points;
+
     }
 
     public void setPoints() {
@@ -27,4 +29,6 @@ public class Player {
     public ArrayList<Card> getCollectedCards() {
         return collectedCards;
     }
+
+
 }
