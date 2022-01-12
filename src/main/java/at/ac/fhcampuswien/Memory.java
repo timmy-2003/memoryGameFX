@@ -19,8 +19,10 @@ public class Memory {
     public Memory(String[] images){
         this.board = new Board();
 
-        player1 = new Player(new ArrayList<>(),0);
-        player2 = new Player(new ArrayList<>(),0);
+        player1 = new Player(new ArrayList<>(),0, "Slavica");
+        player2 = new Player(new ArrayList<>(),0, "Lukas");
+        currentPlayer = player1;
+
 
         memoryCards = new Card[images.length];
         for (int i = 0; i < images.length; i++){
@@ -145,5 +147,10 @@ public class Memory {
     public int getSecondSelectedIndex(){
         return secondSelectedIndex;
     }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
 
 }

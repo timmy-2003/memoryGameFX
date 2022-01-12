@@ -18,7 +18,9 @@ public class GameController {
     private Button[] buttons;
 
     private Memory memory;
-    private Label label_CurrentPlayer;
+    @FXML private Label label_CurrentPlayer;
+    @FXML private Label label_PlayerOneScore;
+    @FXML private Label label_PlayerTwoScore;
     Timer timer = new Timer();
 
     @FXML
@@ -28,13 +30,11 @@ public class GameController {
     public void initialize() {                         //diese Methode wird ausgeführt sobald das Gui geladen ist
         String[] imageArray = new String[]{"Image_01.png", "Image_02.png", "Image_03.png"};
         buttons = new Button[Grid_Memory.getRowCount()*Grid_Memory.getColumnCount()];
-
         memory = new Memory(imageArray);
-
+        updateCurrentPlayer();
 
 
         memory.newGame();
-
         for (int y = 0; y < Grid_Memory.getRowCount(); y++) {  //befüllt beliebig großes Grid mit Buttons
             for (int x = 0; x < Grid_Memory.getColumnCount(); x++) {
                 Button button = new Button();
@@ -61,6 +61,7 @@ public class GameController {
         memory.selectCard(index);
 
 
+
         if (memory.getFirstSelectedCard() != null && memory.getSecondSelectedCard() != null) {
             if (memory.checkIfMatch(memory.getCurrentPlayer(), memory.getFirstSelectedCard(), memory.getSecondSelectedCard())) {
                 memory.resetFirstSelectedCard();
@@ -76,11 +77,13 @@ public class GameController {
                             refreshButton(memory.getSecondSelectedIndex());
                             refreshButton(memory.getFirstSelectedIndex());
                             memory.switchPlayer();
+                            updateCurrentPlayer();
                             memory.resetFirstSelectedCard();
                             memory.resetSecondSelectedCard();
                         });
                     }
                 }, 2000l);
+
 
             }
         }
@@ -104,10 +107,16 @@ public class GameController {
         initialize();
     }
 
-     @FXML
-    public void setLabel_CurrentPlayer(String s){
-     label_CurrentPlayer.setText(s);
+    public void updateCurrentPlayer() {
+        label_CurrentPlayer.setText(memory.getCurrentPlayer().getName() + ", it's your turn!");
+    }
+
+    public void setLabel_PlayerOneScore(){
+        label_PlayerOneScore.setText(String.valueOf(memory.getPlayer1().getPoints()));
+    }
 
 
 
-}}
+
+
+}
