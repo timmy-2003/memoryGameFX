@@ -5,10 +5,12 @@ import java.util.ArrayList;
 public class Player {
     private ArrayList <Card> collectedCards;
     private int points;
+    private String name;
 
-    public Player(ArrayList<Card> collectedCards, int points) {
+    public Player(ArrayList<Card> collectedCards, int points, String name) {
         this.collectedCards = collectedCards;
         this.points = points;
+        this.name = name;
     }
 
     public void setPoints() {
@@ -26,6 +28,10 @@ public class Player {
 
     public ArrayList<Card> getCollectedCards(){
         return collectedCards;
+    }
+
+    public String getName(){
+        return name;
     }
 
 

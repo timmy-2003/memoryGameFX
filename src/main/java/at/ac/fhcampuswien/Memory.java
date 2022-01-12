@@ -19,8 +19,8 @@ public class Memory {
     public Memory(String[] images){
         this.board = new Board();
 
-        player1 = new Player(new ArrayList<>(),0);
-        player2 = new Player(new ArrayList<>(),0);
+        player1 = new Player(new ArrayList<>(),0, "Slavica");
+        player2 = new Player(new ArrayList<>(),0, "Lukas");
 
         memoryCards = new Card[images.length];
         for (int i = 0; i < images.length; i++){
@@ -37,6 +37,8 @@ public class Memory {
 
 
     public void newGame(){   //verteilt Karten auf Brett
+
+
 
         ArrayList<Card> cardList = new ArrayList<>();  //die Karten welche auf dem Feld landen
         for (int i = 0; i < board.getCardCount()/2; i ++){  //Hälfte weil ja jedes Objekt 2 mal auf dem Feld liegt/ Memory hat doppelte Karten
@@ -56,6 +58,7 @@ public class Memory {
             board.setCard(slot1, card);            //Eine Karte wird auf 2 Stellen des Bretts gesetzt
             board.setCard(slot2, card);
         }
+
 
 
     }

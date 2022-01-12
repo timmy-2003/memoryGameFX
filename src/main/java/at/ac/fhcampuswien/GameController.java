@@ -18,7 +18,16 @@ public class GameController {
     private Button[] buttons;
 
     private Memory memory;
+
+    @FXML
     private Label label_CurrentPlayer;
+
+    @FXML
+    private Label label_PlayerOneScore;
+
+    @FXML
+    private Label Label_PlayerTwoScore;
+
     Timer timer = new Timer();
 
     @FXML
@@ -31,9 +40,8 @@ public class GameController {
 
         memory = new Memory(imageArray);
 
-
-
         memory.newGame();
+        updateCurrentPlayer();
 
         for (int y = 0; y < Grid_Memory.getRowCount(); y++) {  //befüllt beliebig großes Grid mit Buttons
             for (int x = 0; x < Grid_Memory.getColumnCount(); x++) {
@@ -80,7 +88,7 @@ public class GameController {
                             memory.resetSecondSelectedCard();
                         });
                     }
-                }, 2000l);
+                }, 1000l);
 
             }
         }
@@ -109,5 +117,9 @@ public class GameController {
      label_CurrentPlayer.setText(s);
 
 
+}
 
-}}
+public void updateCurrentPlayer(){
+        label_CurrentPlayer.setText(memory.getCurrentPlayer().getName());
+    }
+}
