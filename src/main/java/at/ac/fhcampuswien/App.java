@@ -24,13 +24,8 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 800, 620);
         stage.setTitle("Memory");
         stage.setScene(scene);
-        //GridPane grid = (GridPane) scene.lookup("#Grid_Memory"); // Sucht das Element mit der Id Grid_Memory, expliciter cast
 
-        Label label1 = (Label) scene.lookup("#label_PlayerOneScore");
-        label1.setText("Player1 Score: " );
 
-        Label label2 = (Label) scene.lookup("#label_PlayerTwoScore");
-        label2.setText("Player2 Score:" );
 
         stage.show();
     }

@@ -32,9 +32,12 @@ public class GameController {
         buttons = new Button[Grid_Memory.getRowCount()*Grid_Memory.getColumnCount()];
         memory = new Memory(imageArray);
         updateCurrentPlayer();
+        updatePoints();
 
 
         memory.newGame();
+
+
         for (int y = 0; y < Grid_Memory.getRowCount(); y++) {  //befüllt beliebig großes Grid mit Buttons
             for (int x = 0; x < Grid_Memory.getColumnCount(); x++) {
                 Button button = new Button();
@@ -58,6 +61,7 @@ public class GameController {
     public void clickOnButton(int index) {
 
 
+
         memory.selectCard(index);
 
 
@@ -66,6 +70,7 @@ public class GameController {
             if (memory.checkIfMatch(memory.getCurrentPlayer(), memory.getFirstSelectedCard(), memory.getSecondSelectedCard())) {
                 memory.resetFirstSelectedCard();
                 memory.resetSecondSelectedCard();
+                updatePoints();
 
             } else {
                 timer.schedule(new TimerTask() {
@@ -113,6 +118,20 @@ public class GameController {
 
     public void setLabel_PlayerOneScore(){
         label_PlayerOneScore.setText(String.valueOf(memory.getPlayer1().getPoints()));
+    }
+
+
+    public void updatePoints(){
+        if (memory.getPlayer1().getPoints() == 0 && memory.getPlayer2().getPoints() == 0){
+            label_PlayerOneScore.setText(String.valueOf(memory.getPlayer1().getPoints()));
+            label_PlayerTwoScore.setText(String.valueOf(memory.getPlayer2().getPoints()));
+        }
+        if (memory.getCurrentPlayer() == memory.getPlayer1()){
+            label_PlayerOneScore.setText(String.valueOf(memory.getPlayer1().getPoints()));
+        }else {
+            label_PlayerTwoScore.setText(String.valueOf(memory.getPlayer2().getPoints()));
+        }
+
     }
 
 
