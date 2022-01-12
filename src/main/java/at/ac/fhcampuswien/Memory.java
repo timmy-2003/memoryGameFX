@@ -155,4 +155,15 @@ public class Memory {
     public Player getPlayer2() {
         return player2;
     }
+
+    public String checkWhoWon (){
+        if (player1.getPoints() > player2.getPoints()){
+            return player1.getName() + " has won the game!";
+        }
+        if (player2.getPoints() > player1.getPoints()){
+            return player2.getName() + " has won the game!";
+        }else{
+            return "Nobody wins! ";
+        }
+    }
 }

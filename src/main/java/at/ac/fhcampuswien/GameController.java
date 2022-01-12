@@ -4,11 +4,9 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,7 +29,7 @@ public class GameController {
         String[] imageArray = new String[]{"Image_01.png", "Image_02.png", "Image_03.png"};
         buttons = new Button[Grid_Memory.getRowCount()*Grid_Memory.getColumnCount()];
         memory = new Memory(imageArray);
-        updateCurrentPlayer();
+        updateHeaderLabel();
         updatePoints();
 
 
@@ -82,7 +80,7 @@ public class GameController {
                             refreshButton(memory.getSecondSelectedIndex());
                             refreshButton(memory.getFirstSelectedIndex());
                             memory.switchPlayer();
-                            updateCurrentPlayer();
+                            updateHeaderLabel();
                             memory.resetFirstSelectedCard();
                             memory.resetSecondSelectedCard();
                         });
@@ -94,6 +92,7 @@ public class GameController {
         }
         refreshButton(memory.getSecondSelectedIndex());
         refreshButton(memory.getFirstSelectedIndex());
+        updateHeaderLabel();
 
     }
 
@@ -112,8 +111,11 @@ public class GameController {
         initialize();
     }
 
-    public void updateCurrentPlayer() {
+    public void updateHeaderLabel() {
         label_CurrentPlayer.setText(memory.getCurrentPlayer().getName() + ", it's your turn!");
+        if (memory.checkIfEnd()){
+            label_CurrentPlayer.setText(memory.checkWhoWon());
+        }
     }
 
     public void setLabel_PlayerOneScore(){
@@ -133,6 +135,8 @@ public class GameController {
         }
 
     }
+
+
 
 
 
