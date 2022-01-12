@@ -9,10 +9,18 @@ public class Memory {
     private Board board;
     private Player player1;
     private Player player2;
+    private Player currentPlayer;
     private Card[] memoryCards; //alle Karten des Spiels
+    private Card firstSelectedCard;
+    private int firstSelectedIndex;
+    private Card secondSelectedCard;
+    private int secondSelectedIndex;
 
     public Memory(String[] images){
         this.board = new Board();
+
+        player1 = new Player(new ArrayList<>(),0);
+        player2 = new Player(new ArrayList<>(),0);
 
         memoryCards = new Card[images.length];
         for (int i = 0; i < images.length; i++){
@@ -27,7 +35,8 @@ public class Memory {
         return board;
     }
 
-    public void newGame(){
+
+    public void newGame(){   //verteilt Karten auf Brett
 
         ArrayList<Card> cardList = new ArrayList<>();  //die Karten welche auf dem Feld landen
         for (int i = 0; i < board.getCardCount()/2; i ++){  //Hälfte weil ja jedes Objekt 2 mal auf dem Feld liegt/ Memory hat doppelte Karten
@@ -49,6 +58,92 @@ public class Memory {
         }
 
 
+    }
+
+    public boolean checkIfMatch(Player p, Card firstSelectedCard, Card secondSelectedCard){
+            if (firstSelectedCard.equals(secondSelectedCard)){
+                p.getCollectedCards().add(firstSelectedCard);
+                p.getCollectedCards().add(secondSelectedCard);
+                p.setPoints();
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public void selectCard(int index) { //die Logik die passiert, wenn man eine Karte anwählt
+            if (board.isOpen(index)) {
+                return;
+            }
+
+            if(firstSelectedCard != null && secondSelectedCard != null){
+                return;
+            }
+            if (firstSelectedCard == null) {
+                firstSelectedCard = board.getCard(index);
+                firstSelectedIndex = index;
+                board.setCardState(index, true);
+            } else {
+                secondSelectedCard = board.getCard(index);
+                secondSelectedIndex = index;
+                board.setCardState(index, true);
+            }
+        }
+
+
+          /*  Versuch die Methode zu schreiben } else {
+              //  if (checkIfMatch(currentPlayer, firstSelectedCard, board.getCard(index)) == true) {
+              //      board.setCardState(index, true);
+                    //hier weitermachen
+                }
+
+            }
+        */
+
+    public boolean checkIfEnd(){        //prüft ob Spiel zu Ende
+        for (int i = 0; i < board.getCardCount(); i++) {
+            if (!board.getCardState(i)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public Player getCurrentPlayer(){
+        return currentPlayer;
+
+    }
+
+    public Card getFirstSelectedCard(){
+        return firstSelectedCard;
+    }
+
+    public Card getSecondSelectedCard(){
+        return secondSelectedCard;
+    }
+
+    public void switchPlayer(){
+        if (currentPlayer == player1){
+            currentPlayer = player2;
+        }else {
+            currentPlayer = player1;
+        }
+    }
+
+    public  void resetFirstSelectedCard(){
+        firstSelectedCard = null;
+    }
+
+    public  void resetSecondSelectedCard(){
+        secondSelectedCard = null;
+    }
+
+    public int getFirstSelectedIndex(){
+        return  firstSelectedIndex;
+    }
+
+    public int getSecondSelectedIndex(){
+        return secondSelectedIndex;
     }
 
 }

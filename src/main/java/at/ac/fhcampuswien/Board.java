@@ -30,4 +30,8 @@ public class Board {
         this.cardState[index] = cardState;
     }
 
+    public boolean getCardState(int index){
+        return cardState[index];
+    }
+
 }

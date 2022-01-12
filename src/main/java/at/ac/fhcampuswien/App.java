@@ -26,8 +26,11 @@ public class App extends Application {
         stage.setScene(scene);
         //GridPane grid = (GridPane) scene.lookup("#Grid_Memory"); // Sucht das Element mit der Id Grid_Memory, expliciter cast
 
-        Label label = (Label) scene.lookup("#label_PlayerOneScore");
-        label.setText("Score Player Slavica: 1");
+        Label label1 = (Label) scene.lookup("#label_PlayerOneScore");
+        label1.setText("Player1 Score: " );
+
+        Label label2 = (Label) scene.lookup("#label_PlayerTwoScore");
+        label2.setText("Player2 Score:" );
 
         stage.show();
     }

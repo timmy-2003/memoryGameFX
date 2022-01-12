@@ -1,10 +1,16 @@
 package at.ac.fhcampuswien;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameController {
     @FXML
@@ -12,6 +18,11 @@ public class GameController {
     private Button[] buttons;
 
     private Memory memory;
+    private Label label_CurrentPlayer;
+    Timer timer = new Timer();
+
+    @FXML
+    private Button newGameButton;
 
     @FXML
     public void initialize() {                         //diese Methode wird ausgeführt sobald das Gui geladen ist
@@ -19,6 +30,8 @@ public class GameController {
         buttons = new Button[Grid_Memory.getRowCount()*Grid_Memory.getColumnCount()];
 
         memory = new Memory(imageArray);
+
+
 
         memory.newGame();
 
@@ -42,25 +55,59 @@ public class GameController {
 
     }
 
-    public void clickOnButton(int index){
-        if (memory.getBoard().isOpen(index)){
-            memory.getBoard().setCardState(index, false);
+    public void clickOnButton(int index) {
+
+
+        memory.selectCard(index);
+
+
+        if (memory.getFirstSelectedCard() != null && memory.getSecondSelectedCard() != null) {
+            if (memory.checkIfMatch(memory.getCurrentPlayer(), memory.getFirstSelectedCard(), memory.getSecondSelectedCard())) {
+                memory.resetFirstSelectedCard();
+                memory.resetSecondSelectedCard();
+
+            } else {
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(() -> {
+                            memory.getBoard().setCardState(memory.getFirstSelectedIndex(), false);
+                            memory.getBoard().setCardState(memory.getSecondSelectedIndex(), false);
+                            refreshButton(memory.getSecondSelectedIndex());
+                            refreshButton(memory.getFirstSelectedIndex());
+                            memory.switchPlayer();
+                            memory.resetFirstSelectedCard();
+                            memory.resetSecondSelectedCard();
+                        });
+                    }
+                }, 2000l);
+
+            }
         }
-        else {
-            memory.getBoard().setCardState(index, true);
-        }
-        refreshButton(index);
+        refreshButton(memory.getSecondSelectedIndex());
+        refreshButton(memory.getFirstSelectedIndex());
+
     }
 
-    public void refreshButton(int index){   //synchronisiert den Zustand der Karte, logik über den zustand(wann Vorderseite, wann Rückseite angezeigt werden soll)
+
+    public void refreshButton(int index) {   //synchronisiert den Zustand der Karte, logik über den zustand(wann Vorderseite, wann Rückseite angezeigt werden soll)
         Card card = memory.getBoard().getCard(index);
-        if(memory.getBoard().isOpen(index)){
+        if (memory.getBoard().isOpen(index)) {
             buttons[index].setGraphic(new ImageView(card.getFront()));
-        }
-        else {
+        } else {
             buttons[index].setGraphic(new ImageView(card.getBackground()));
         }
     }
 
+    @FXML
+    public void clickNewGame(){
+        initialize();
+    }
 
-}
+     @FXML
+    public void setLabel_CurrentPlayer(String s){
+     label_CurrentPlayer.setText(s);
+
+
+
+}}
