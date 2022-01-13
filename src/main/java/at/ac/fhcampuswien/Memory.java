@@ -30,7 +30,7 @@ public class Memory {
 
         memoryCards = new Card[images.length];
         for (int i = 0; i < images.length; i++) {
-            Image front = new Image(App.class.getResource(images[i]).toString(), 100, 30, true, false);
+            Image front = new Image(App.class.getResource(images[i]).toString(), 80, 120, true, true);
             Card card = new Card(front);
             memoryCards[i] = card;
         }
@@ -94,7 +94,7 @@ public class Memory {
 
     public boolean checkIfEnd() {        // Überprüft, ob das Spiel aus ist, indem die Kartenzustände (true = aufgedeckt, false = zugedeckt) kontrolliert werden
         for (int i = 0; i < board.getCardCount(); i++) {
-            if (!board.getCardState(i)) {
+            if (!board.isOpen(i)) {
                 return false;
             }
         }

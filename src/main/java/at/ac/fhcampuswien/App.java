@@ -21,7 +21,7 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Game_UI.fxml")); //macht GUI aus FXML file
 
 
-        Scene scene = new Scene(fxmlLoader.load(), 800, 620);
+        Scene scene = new Scene(fxmlLoader.load(), 900, 620);
         stage.setTitle("Memory");
         stage.setScene(scene);
 

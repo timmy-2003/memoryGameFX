@@ -29,12 +29,13 @@ public class GameController {
 
     @FXML
     public void initialize() {                         //diese Methode wird ausgeführt, sobald das GUI geladen ist
-        String[] imageArray = new String[]{"Image_01.png", "Image_02.png", "Image_03.png"};
+        String[] imageArray = new String[]{"front_1.png", "front_2.png", "front_3.png", "front_4.png", "front_5.png", "front_6.png", "front_7.png", "front_8.png", "front_9.png", "front_10.png",
+                "front_11.png", "front_12.png", "front_13.png", "front_14.png", "front_15.png", "front_16.png", "front_17.png", "front_18.png","front_19.png", "front_20.png", "front_21.png",
+                "front_22.png", "front_23.png", "front_24.png"};
         buttons = new Button[Grid_Memory.getRowCount() * Grid_Memory.getColumnCount()];
         memory = new Memory(imageArray);
         updateHeaderLabel();
         updatePoints();
-
         memory.newGame();
 
         for (int y = 0; y < Grid_Memory.getRowCount(); y++) {  //befüllt beliebig großes Grid mit Buttons
@@ -66,7 +67,7 @@ public class GameController {
                 memory.resetSecondSelectedCard();
                 updatePoints(); // Wenn die Karten identisch sind, werden die Karten zurückgesetzt und der Punktestand aktualisiert
             } else {
-                timer.schedule(new TimerTask() { //Timer, um das Zudecken zweier nicht-identischen Spielkarten um zwei Sekunden zu verzögern
+                timer.schedule(new TimerTask() { //Timer, um das Zudecken zweier nicht-identischen Spielkarten um eine Sekunde zu verzögern
                     @Override
                     public void run() {
                         Platform.runLater(() -> {

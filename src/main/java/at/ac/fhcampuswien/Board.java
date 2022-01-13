@@ -5,8 +5,8 @@ public class Board {
     private boolean[] cardState; //beinhaltet Informationen, ob eine Karte aufgedeckt ist oder nicht (true = aufgedeckt)
 
     public Board() {
-        cardSlots = new Card[20];
-        cardState = new boolean[20];
+        cardSlots = new Card[24];
+        cardState = new boolean[24];
     }
 
     public Card getCard(int index) { // diese Methode liefert eine Karte aus dem cards Array zurück
@@ -29,8 +29,5 @@ public class Board {
         this.cardState[index] = cardState;
     }
 
-    public boolean getCardState(int index) {
-        return cardState[index];
-    }
 
 }
