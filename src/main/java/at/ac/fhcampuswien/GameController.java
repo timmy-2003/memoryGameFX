@@ -58,6 +58,7 @@ public class GameController {
     }
 
     public void clickOnButton(int index) {
+
         memory.selectCard(index);
         if (memory.getFirstSelectedCard() != null && memory.getSecondSelectedCard() != null) {
             if (memory.checkIfMatch(memory.getCurrentPlayer(), memory.getFirstSelectedCard(), memory.getSecondSelectedCard())) {
@@ -79,7 +80,7 @@ public class GameController {
                             memory.resetSecondSelectedCard();
                         });
                     }
-                }, 2000l);
+                }, 1000l);
             }
         }
         refreshButton(memory.getSecondSelectedIndex());
@@ -109,14 +110,15 @@ public class GameController {
     }
 
     public void updatePoints() { //Methode steuert diejenigen Label, die für den Punktestand zuständig sind
+
         if (memory.getPlayer1().getPoints() == 0 && memory.getPlayer2().getPoints() == 0) {
-            label_PlayerOneScore.setText(String.valueOf(memory.getPlayer1().getPoints()));
-            label_PlayerTwoScore.setText(String.valueOf(memory.getPlayer2().getPoints()));
+            label_PlayerOneScore.setText(memory.getPlayer1().getName() + ": " + String.valueOf(memory.getPlayer1().getPoints()));
+            label_PlayerTwoScore.setText(memory.getPlayer2().getName() + ": " + String.valueOf(memory.getPlayer2().getPoints()));
         }
         if (memory.getCurrentPlayer() == memory.getPlayer1()) {
-            label_PlayerOneScore.setText(String.valueOf(memory.getPlayer1().getPoints()));
+            label_PlayerOneScore.setText(memory.getPlayer1().getName() + ": " + String.valueOf(memory.getPlayer1().getPoints()));
         } else {
-            label_PlayerTwoScore.setText(String.valueOf(memory.getPlayer2().getPoints()));
+            label_PlayerTwoScore.setText(String.valueOf(memory.getPlayer2().getName() + ": " + memory.getPlayer2().getPoints()));
         }
     }
 }
