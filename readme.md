@@ -1,11 +1,9 @@
-### Start application
-Open gradle Window:
-- View -> Window Tools -> Gradle
-- In window -> Tasks -> Application -> run
-    
-    
-#### Helpful Links
-[Getting Started with JavaFX](https://openjfx.io/openjfx-docs/#gradle)
+### Infos 
+Wie ihr das Spiel zum Laufen bekommt: Am rechten Rand von IntelliJ auf Gradle klicken -> Tasks -> application -> run
 
-[JavaFX Programm mit Gradle](https://kofler.info/javafx-programm-mit-gradle/)
+Die Spielernamen könnt ihr in der Klasse Memory beim Konstruktoraufruf verändern --> in der finalen Version wird das wahrscheinlich als Userinput im Spiel eingebaut sein
+
+
+
+Viel Spaß beim Testen!
 
