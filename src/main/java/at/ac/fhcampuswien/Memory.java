@@ -18,7 +18,7 @@ public class Memory {
     public Memory(String[] images) {
         this.board = new Board();
 
-        player1 = new Player(new ArrayList<>(), 0, "Timmy");
+        player1 = new Player(new ArrayList<>(), 0, "Timmy"); // Zwei Spieler anlegen
         player2 = new Player(new ArrayList<>(), 0, "Patrik");
 
         int OneOrTwo = Utilities.randomGenerator(2); // Zufall bestimmt, wer zuerst drankommt
@@ -28,7 +28,7 @@ public class Memory {
             currentPlayer = player2;
 
 
-        memoryCards = new Card[images.length];
+        memoryCards = new Card[images.length]; // memoryCards (alle Karten des Spiels) wird mit Karten befüllt
         for (int i = 0; i < images.length; i++) {
             Image front = new Image(App.class.getResource(images[i]).toString(), 80, 120, true, true);
             Card card = new Card(front);
@@ -40,11 +40,11 @@ public class Memory {
     public void newGame() {   //verteilt Karten auf Brett
 
         ArrayList<Card> cardList = new ArrayList<>();  //die Karten welche auf dem Feld landen
-        for (int i = 0; i < board.getCardCount() / 2; i++) {  //Hälfte weil ja jedes Objekt 2 mal auf dem Feld liegt/ Memory hat doppelte Karten
+        for (int i = 0; i < board.getCardCount() / 2; i++) {  //Hälfte, weil ja jedes Objekt zweimal auf dem Feld liegt → Memory hat doppelte Karten
             cardList.add(memoryCards[Utilities.randomGenerator(memoryCards.length)]); // fügt eine zufällige Karte hinzu
         }
 
-        ArrayList<Integer> slots = new ArrayList<>(); //enthält alles Slot-Addressen
+        ArrayList<Integer> slots = new ArrayList<>(); //enthält alle Slot-"Adressen"
         for (int i = 0; i < board.getCardCount(); i++) {
             slots.add(i);
         }
@@ -66,7 +66,7 @@ public class Memory {
         if (firstSelectedCard.equals(secondSelectedCard)) {
             p.getCollectedCards().add(firstSelectedCard);
             p.getCollectedCards().add(secondSelectedCard);
-            p.setPoints();
+            p.setPoints(); // Punkte werden anhand der Anzahl der gesammelten Karten berechnet, daher müssen zuerst die Karten hinzugefügt, und erst dann die Punkte aktualisiert werden
             return true;
         } else {
             return false;
@@ -82,9 +82,9 @@ public class Memory {
             return;
         }
         if (firstSelectedCard == null) {
-            firstSelectedCard = board.getCard(index);
+            firstSelectedCard = board.getCard(index);  //Speichert die vom Spieler ausgewählten Karten in zwei Variablen
             firstSelectedIndex = index;
-            board.setCardState(index, true);
+            board.setCardState(index, true); // Kartenzustand wird aktualisiert, da die Karte ja jetzt aufgedeckt ist --> Das ist notwendig, damit die Methode refreshButton die Karte "umdrehen" kann
         } else {
             secondSelectedCard = board.getCard(index);
             secondSelectedIndex = index;
@@ -101,7 +101,7 @@ public class Memory {
         return true;
     }
 
-    public Player getCurrentPlayer() {
+    public Player getCurrentPlayer() { // Liefert den aktuellen Spieler zurück
         return currentPlayer;
 
     }
@@ -114,7 +114,7 @@ public class Memory {
         }
     }
 
-    public String checkWhoWon() { //Methode liefert den Text zurück, der am Ende des Spiels angezeigt werden soll (Gewinner oder Gleichstand)
+    public String checkWhoWon() { // Methode liefert den Text zurück, der am Ende des Spiels angezeigt werden soll (Gewinner oder Gleichstand)
         if (player1.getPoints() > player2.getPoints()) {
             return player1.getName() + " has won the game!";
         }
@@ -128,7 +128,6 @@ public class Memory {
     public void resetFirstSelectedCard() {
         firstSelectedCard = null;
     } // Karten werden auf null zurückgesetzt, damit der Speicher für die Karten wieder verwendet werden kann
-
     public void resetSecondSelectedCard() {
         secondSelectedCard = null;
     }
@@ -143,7 +142,7 @@ public class Memory {
 
     public Player getPlayer1() {
         return player1;
-    }
+    }           //Diverse getter-Methoden für den Controller
 
     public Player getPlayer2() {
         return player2;
@@ -157,7 +156,7 @@ public class Memory {
         return secondSelectedCard;
     }
 
-    public Board getBoard() {           // diese Methode liefert ein Board
+    public Board getBoard() {
         return board;
     }
 }

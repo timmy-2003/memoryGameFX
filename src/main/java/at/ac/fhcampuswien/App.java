@@ -15,16 +15,16 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-
-        //Card card = new Card(front);
-
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Game_UI.fxml")); //macht GUI aus FXML file
 
 
-        Scene scene = new Scene(fxmlLoader.load(), 900, 620);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 620);
         stage.setTitle("Memory");
+        stage.getIcons().add(new Image (App.class.getResourceAsStream("windowIcon.png")));
         stage.setScene(scene);
 
+        Button newGameButton = (Button) scene.lookup("#newGameButton");
+        newGameButton.setFocusTraversable(false);
 
         stage.show();
     }

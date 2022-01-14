@@ -7,7 +7,7 @@ public class Player {
     private int points;
     private String name;
 
-    public Player(ArrayList<Card> collectedCards, int points, String name) {
+    public Player(ArrayList<Card> collectedCards, int points, String name) { // Konstruktor
         this.collectedCards = collectedCards;
         this.points = points;
         this.name = name;

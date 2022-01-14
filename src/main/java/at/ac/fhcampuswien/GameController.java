@@ -36,6 +36,7 @@ public class GameController {
         memory = new Memory(imageArray);
         updateHeaderLabel();
         updatePoints();
+        newGameButton.setText("Reset game");
         memory.newGame();
 
         for (int y = 0; y < Grid_Memory.getRowCount(); y++) {  //befüllt beliebig großes Grid mit Buttons
@@ -55,7 +56,8 @@ public class GameController {
                 refreshButton(x + y * Grid_Memory.getColumnCount());
             }
         }
-
+        for (Button button : buttons)
+            button.setFocusTraversable(false);
     }
 
     public void clickOnButton(int index) {
@@ -107,6 +109,7 @@ public class GameController {
         label_CurrentPlayer.setText(memory.getCurrentPlayer().getName() + ", it's your turn!");
         if (memory.checkIfEnd()) {
             label_CurrentPlayer.setText(memory.checkWhoWon());
+            newGameButton.setText("New game!");
         }
     }
 
