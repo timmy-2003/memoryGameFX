@@ -17,7 +17,6 @@ public class Memory {
 
     public Memory(String[] images) {
         this.board = new Board();
-
         player1 = new Player(new ArrayList<>(), 0, "Timmy"); // Zwei Spieler anlegen
         player2 = new Player(new ArrayList<>(), 0, "Patrik");
 
