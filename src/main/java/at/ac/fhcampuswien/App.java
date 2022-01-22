@@ -22,7 +22,14 @@ public class App extends Application {
         scene2.getStylesheets().add(getClass().getResource("memory.css").toExternalForm());
         stage.setScene(scene2);
         Button startButton = (Button) scene2.lookup("#Play_Button");
+        TextField textField1 = (TextField) scene2.lookup("#Textfield_1");
+        TextField textField2 = (TextField) scene2.lookup("#Textfield_2");
         startButton.setOnAction(e -> {
+            GameController controller = fxmlLoader1.getController();                          //liefert controler zurück
+            controller.getMemory().getPlayer1().setName(textField1.getText());
+            controller.getMemory().getPlayer2().setName(textField2.getText());
+            controller.updateHeaderLabel();
+            controller.updatePoints();
             stage.setScene(scene1);
         });
         Button menuButton = (Button) scene1.lookup("#menuButton");

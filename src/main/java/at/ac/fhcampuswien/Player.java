@@ -32,4 +32,9 @@ public class Player {
         this.name = newName;
     }
 
+    public void resetButKeepName(){    // Setzt den Spieler für neues Spiel zurück
+        this.collectedCards.clear();
+        this.points = 0;
+    }
+
 }

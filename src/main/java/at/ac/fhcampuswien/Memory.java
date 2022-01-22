@@ -38,6 +38,12 @@ public class Memory {
 
     public void newGame() {   //verteilt Karten auf Brett
 
+        int OneOrTwo = Utilities.randomGenerator(2); // Zufall bestimmt, wer zuerst drankommt
+        if (OneOrTwo == 1)
+            currentPlayer = player1;
+        else
+            currentPlayer = player2;
+
         ArrayList<Card> cardList = new ArrayList<>();  //die Karten welche auf dem Feld landen
         for (int i = 0; i < memoryCards.length; i++) {
             cardList.add(memoryCards[i]);
@@ -55,7 +61,15 @@ public class Memory {
 
             board.setCard(slot1, card);            //Eine Karte wird auf 2 Stellen des Bretts gesetzt
             board.setCard(slot2, card);
+            board.setCardState(slot1, false);
+            board.setCardState(slot2, false);
         }
+
+        player1.resetButKeepName();
+        player2.resetButKeepName();
+
+        resetFirstSelectedCard();
+        resetSecondSelectedCard();
 
 
     }

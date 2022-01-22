@@ -29,6 +29,9 @@ public class GameController {
     Timer timer = new Timer();
 
 
+
+
+
     @FXML
     public void initialize() {//diese Methode wird ausgeführt, sobald das GUI geladen ist
         String[] imageArray = new String[]{"front_1.png", "front_2.png", "front_3.png", "front_4.png", "front_5.png", "front_6.png", "front_7.png", "front_8.png", "front_9.png", "front_10.png",
@@ -105,7 +108,12 @@ public class GameController {
 
     @FXML
     public void clickNewGame() { //Ein Klick auf den New-Game-Button ruft diese Methode auf. Das Spiel fängt von neuem an.
-        initialize();
+        memory.newGame();
+        for (int i = 0; i < buttons.length; i++) {   //Refresht alle Buttons
+            refreshButton(i);
+        }
+        updateHeaderLabel();
+        updatePoints();
     }
 
     public void updateHeaderLabel() { //Methode steuert das obere Text-Label (Anzeige des aktuellen Spielers + Benachrichtigung, wenn das Spiel beendet ist
@@ -118,15 +126,13 @@ public class GameController {
 
     public void updatePoints() { //Methode steuert diejenigen Label, die für den Punktestand zuständig sind
 
-        if (memory.getPlayer1().getPoints() == 0 && memory.getPlayer2().getPoints() == 0) {
             label_PlayerOneScore.setText(memory.getPlayer1().getName() + ": " + String.valueOf(memory.getPlayer1().getPoints()));
             label_PlayerTwoScore.setText(memory.getPlayer2().getName() + ": " + String.valueOf(memory.getPlayer2().getPoints()));
-        }
-        if (memory.getCurrentPlayer() == memory.getPlayer1()) {
-            label_PlayerOneScore.setText(memory.getPlayer1().getName() + ": " + String.valueOf(memory.getPlayer1().getPoints()));
-        } else {
-            label_PlayerTwoScore.setText(String.valueOf(memory.getPlayer2().getName() + ": " + memory.getPlayer2().getPoints()));
-        }
+
+    }
+
+    public Memory getMemory(){
+        return memory;
     }
 
 }
