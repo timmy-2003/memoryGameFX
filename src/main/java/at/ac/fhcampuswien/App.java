@@ -13,7 +13,6 @@ import java.util.Objects;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-
         FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource("Game_UI.fxml")); //macht GUI aus FXML file
         FXMLLoader fxmlLoader2 = new FXMLLoader(App.class.getResource("startscreen.fxml"));
 
@@ -22,8 +21,10 @@ public class App extends Application {
         scene1.getStylesheets().add(getClass().getResource("memory.css").toExternalForm());
         scene2.getStylesheets().add(getClass().getResource("memory.css").toExternalForm());
         stage.setScene(scene2);
-        Button startButton = (Button) scene2.lookup("#startButton");
-        startButton.setOnAction(e -> stage.setScene(scene1));
+        Button startButton = (Button) scene2.lookup("#Play_Button");
+        startButton.setOnAction(e -> {
+            stage.setScene(scene1);
+        });
         Button menuButton = (Button) scene1.lookup("#menuButton");
         menuButton.setOnAction(e -> stage.setScene(scene2));
         ChoiceBox<String> themeSelector = (ChoiceBox<String>) scene2.lookup("#themeSelector");

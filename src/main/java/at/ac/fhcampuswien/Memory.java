@@ -17,8 +17,8 @@ public class Memory {
 
     public Memory(String[] images) {
         this.board = new Board();
-        player1 = new Player(new ArrayList<>(), 0, "Timmy"); // Zwei Spieler anlegen
-        player2 = new Player(new ArrayList<>(), 0, "Patrik");
+        player1 = new Player(new ArrayList<>(), 0); // Zwei Spieler anlegen
+        player2 = new Player(new ArrayList<>(), 0);
 
         int OneOrTwo = Utilities.randomGenerator(2); // Zufall bestimmt, wer zuerst drankommt
         if (OneOrTwo == 1)
@@ -39,8 +39,8 @@ public class Memory {
     public void newGame() {   //verteilt Karten auf Brett
 
         ArrayList<Card> cardList = new ArrayList<>();  //die Karten welche auf dem Feld landen
-        for (int i = 0; i < board.getCardCount() / 2; i++) {  //Hälfte, weil ja jedes Objekt zweimal auf dem Feld liegt → Memory hat doppelte Karten
-            cardList.add(memoryCards[Utilities.randomGenerator(memoryCards.length)]); // fügt eine zufällige Karte hinzu
+        for (int i = 0; i < memoryCards.length; i++) {
+            cardList.add(memoryCards[i]);
         }
 
         ArrayList<Integer> slots = new ArrayList<>(); //enthält alle Slot-"Adressen"
@@ -48,8 +48,8 @@ public class Memory {
             slots.add(i);
         }
 
-        for (int i = 0; i < cardList.size(); i++) {
-            Card card = cardList.get(i);
+        for (int i = 0; i < board.getCardCount()/2; i++) {
+            Card card = cardList.remove(Utilities.randomGenerator(cardList.size()));
             Integer slot1 = slots.remove(Utilities.randomGenerator(slots.size()));          //dieser Eintrag wird aus der Liste gelöscht, dadurch kann er nicht doppelt vorkommen
             Integer slot2 = slots.remove(Utilities.randomGenerator(slots.size()));
 

@@ -7,10 +7,9 @@ public class Player {
     private int points;
     private String name;
 
-    public Player(ArrayList<Card> collectedCards, int points, String name) { // Konstruktor
+    public Player(ArrayList<Card> collectedCards, int points) { // Konstruktor
         this.collectedCards = collectedCards;
         this.points = points;
-        this.name = name;
     }
 
     public void setPoints() {
@@ -28,4 +27,9 @@ public class Player {
     public String getName() {
         return name;
     }
+
+    public void setName(String newName){
+        this.name = newName;
+    }
+
 }
