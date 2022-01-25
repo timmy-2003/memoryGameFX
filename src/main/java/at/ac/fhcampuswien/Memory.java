@@ -55,7 +55,7 @@ public class Memory {
             slots.add(i);
         }
 
-        for (int i = 0; i < board.getCardCount()/2; i++) {
+        for (int i = 0; i < board.getCardCount() / 2; i++) {
             Card card = cardList.remove(Utilities.randomGenerator(cardList.size()));
             Integer slot1 = slots.remove(Utilities.randomGenerator(slots.size()));          //dieser Eintrag wird aus der Liste gelöscht, dadurch kann er nicht doppelt vorkommen
             Integer slot2 = slots.remove(Utilities.randomGenerator(slots.size()));
@@ -141,6 +141,7 @@ public class Memory {
     public void resetFirstSelectedCard() {
         firstSelectedCard = null;
     } // Karten werden auf null zurückgesetzt, damit der Speicher für die Karten wieder verwendet werden kann
+
     public void resetSecondSelectedCard() {
         secondSelectedCard = null;
     }
@@ -172,8 +173,6 @@ public class Memory {
     public Board getBoard() {
         return board;
     }
-
-
 
 
 }

@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,7 +25,7 @@ public class GameController {
     private Button newGameButton;
     Timer timer = new Timer();
     private boolean timerRunning;
-    String[] imageArray = new String[]{"front_1.png", "front_2.png", "front_3.png", "front_4.png", "front_5.png", "front_6.png", "front_7.png", "front_8.png", "front_9.png", "front_10.png",
+    String[] christmas = new String[]{"front_1.png", "front_2.png", "front_3.png", "front_4.png", "front_5.png", "front_6.png", "front_7.png", "front_8.png", "front_9.png", "front_10.png",
             "front_11.png", "front_12.png", "front_13.png", "front_14.png", "front_15.png", "front_16.png", "front_17.png", "front_18.png", "front_19.png", "front_20.png", "front_21.png",
             "front_22.png", "front_23.png", "front_24.png"};
     String[] countries = new String[]{"flag (1).png", "flag (2).png", "flag (3).png", "flag (4).png", "flag (5).png", "flag (6).png", "flag (7).png", "flag (8).png", "flag (9).png", "flag (10).png", "flag (11).png", "flag (12).png",
@@ -34,7 +35,8 @@ public class GameController {
     @FXML
     public void initialize() {//diese Methode wird ausgeführt, sobald das GUI geladen ist
         buttons = new Button[Grid_Memory.getRowCount() * Grid_Memory.getColumnCount()];
-        memory = new Memory(imageArray);
+        memory = new Memory(countries);
+
         updateHeaderLabel();
         updatePoints();
         newGameButton.setText("Reset game");
@@ -48,7 +50,7 @@ public class GameController {
                     Button eventButton = (Button) actionEvent.getSource(); //findet den Button, der gedrückt wurde
 
                     int buttonIndex = Integer.parseInt(eventButton.getId());
-                    if (!timerRunning){
+                    if (!timerRunning) {
                         clickOnButton(buttonIndex);
                     }
 
@@ -131,5 +133,4 @@ public class GameController {
     public Memory getMemory() {
         return memory;
     }
-
 }

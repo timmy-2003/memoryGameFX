@@ -18,7 +18,7 @@
 .button{
     -fx-background-radius: 0;
     -fx-focus-traversable: false;
-    -fx-background-color: white;
+    -fx-background-color: #fff2df;
 }
 
 
@@ -31,10 +31,14 @@
 }
 
 #background{
-    -fx-background-color: #597402;
+    -fx-background-color: #588c7e;
+}
+
+.choice-box .label {
+    -fx-text-fill: black;
+}
+.choice-box .context-menu {
+    -fx-background-color: #fff2df ;
 }
 
 
-.text-area{
-    -fx-background-color: white;
-}

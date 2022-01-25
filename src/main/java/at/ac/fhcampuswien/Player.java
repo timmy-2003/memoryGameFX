@@ -28,11 +28,11 @@ public class Player {
         return name;
     }
 
-    public void setName(String newName){
+    public void setName(String newName) {
         this.name = newName;
     }
 
-    public void resetButKeepName(){    // Setzt den Spieler für neues Spiel zurück
+    public void resetButKeepName() {    // Setzt den Spieler für neues Spiel zurück
         this.collectedCards.clear();
         this.points = 0;
     }
