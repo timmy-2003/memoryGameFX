@@ -39,7 +39,7 @@ public class GameController {
 
         updateHeaderLabel();
         updatePoints();
-        newGameButton.setText("Reset game");
+        newGameButton.setText("New game!");
         memory.newGame();
         for (int rows = 0; rows < Grid_Memory.getRowCount(); rows++) {  //befüllt beliebig großes Grid mit Buttons
             for (int columns = 0; columns < Grid_Memory.getColumnCount(); columns++) {
@@ -119,7 +119,6 @@ public class GameController {
         label_CurrentPlayer.setText(memory.getCurrentPlayer().getName() + ", it's your turn!");
         if (memory.checkIfEnd()) {
             label_CurrentPlayer.setText(memory.checkWhoWon());
-            newGameButton.setText("New game!");
         }
     }
 
