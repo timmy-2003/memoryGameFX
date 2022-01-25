@@ -1,0 +1,44 @@
+.label{
+    -fx-font-family: "Calibri Light";
+    -fx-text-fill: white;
+}
+#label_CurrentPlayer{
+    -fx-font-size: 30;
+
+}
+
+#menuButton{
+    -fx-background-color: #101e02;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-font-size: 15;
+    -fx-alignment: center;
+}
+
+.button{
+    -fx-background-radius: 0;
+    -fx-focus-traversable: false;
+    -fx-background-color: #fff2df;
+}
+
+
+#newGameButton{
+    -fx-background-radius: 10;
+    -fx-font-size: 15;
+    -fx-alignment: center;
+    -fx-background-color: #101e02;
+    -fx-focus-traversable: false;
+}
+
+#background{
+    -fx-background-color: #588c7e;
+}
+
+.choice-box .label {
+    -fx-text-fill: black;
+}
+.choice-box .context-menu {
+    -fx-background-color: #fff2df ;
+}
+
+
