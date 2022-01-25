@@ -15,10 +15,11 @@ public class Memory {
     private Card secondSelectedCard;
     private int secondSelectedIndex;
 
-    public Memory(String[] images) {
+    public Memory(String[] images) { //Konstruktor, dem die Dateinamen der Bilder als String [] übergeben werden
         this.board = new Board();
-        player1 = new Player(new ArrayList<>(), 0); // Zwei Spieler anlegen
+        player1 = new Player(new ArrayList<>(), 0); // Zwei Spieler anlegen mit Punktestand 0 und leerer Liste an gesammelten Karten (Beginn des Spiels)
         player2 = new Player(new ArrayList<>(), 0);
+
 
         int OneOrTwo = Utilities.randomGenerator(2); // Zufall bestimmt, wer zuerst drankommt
         if (OneOrTwo == 1)
@@ -97,12 +98,11 @@ public class Memory {
         if (firstSelectedCard == null) {
             firstSelectedCard = board.getCard(index);  //Speichert die vom Spieler ausgewählten Karten in zwei Variablen
             firstSelectedIndex = index;
-            board.setCardState(index, true); // Kartenzustand wird aktualisiert, da die Karte ja jetzt aufgedeckt ist --> Das ist notwendig, damit die Methode refreshButton die Karte "umdrehen" kann
         } else {
             secondSelectedCard = board.getCard(index);
             secondSelectedIndex = index;
-            board.setCardState(index, true);
         }
+        board.setCardState(index, true); // Kartenzustand wird aktualisiert, da die Karte ja jetzt aufgedeckt ist --> Das ist notwendig, damit die Methode refreshButton die Karte "umdrehen" kann
     }
 
     public boolean checkIfEnd() {        // Überprüft, ob das Spiel aus ist, indem die Kartenzustände (true = aufgedeckt, false = zugedeckt) kontrolliert werden
@@ -172,4 +172,8 @@ public class Memory {
     public Board getBoard() {
         return board;
     }
+
+
+
+
 }

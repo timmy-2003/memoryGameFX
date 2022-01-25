@@ -21,11 +21,12 @@ public class App extends Application {
         scene1.getStylesheets().add(getClass().getResource("memory.css").toExternalForm());
         scene2.getStylesheets().add(getClass().getResource("memory.css").toExternalForm());
         stage.setScene(scene2);
+        stage.setResizable(false);
         Button startButton = (Button) scene2.lookup("#Play_Button");
         TextField textField1 = (TextField) scene2.lookup("#Textfield_1");
         TextField textField2 = (TextField) scene2.lookup("#Textfield_2");
-        startButton.setOnAction(e -> {
-            GameController controller = fxmlLoader1.getController();                          //liefert controler zurück
+        GameController controller = fxmlLoader1.getController();
+        startButton.setOnAction(e -> {//liefert controller zurück
             controller.getMemory().getPlayer1().setName(textField1.getText());
             controller.getMemory().getPlayer2().setName(textField2.getText());
             controller.updateHeaderLabel();
@@ -34,9 +35,6 @@ public class App extends Application {
         });
         Button menuButton = (Button) scene1.lookup("#menuButton");
         menuButton.setOnAction(e -> stage.setScene(scene2));
-        ChoiceBox<String> themeSelector = (ChoiceBox<String>) scene2.lookup("#themeSelector");
-        themeSelector.getItems().add(0, "Flags");
-        themeSelector.getItems().add(1, "Christmas");
         stage.setTitle("Memory");
         stage.getIcons().add(new Image (Objects.requireNonNull(App.class.getResourceAsStream("backOfCard.png"))));
         stage.show();

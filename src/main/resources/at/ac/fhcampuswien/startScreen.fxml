@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane prefHeight="640.0" prefWidth="520.0" style="-fx-background-color: #597402; -fx-min-width: 100; -fx-min-height: 620;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="640.0" prefWidth="520.0" scaleShape="false" style="-fx-background-color: #597402; -fx-min-width: 100; -fx-min-height: 620;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label alignment="CENTER" layoutX="5.0" layoutY="27.0" prefHeight="43.0" prefWidth="507.0" text="Welcome to our memory game!" textFill="WHITE">
          <font>
