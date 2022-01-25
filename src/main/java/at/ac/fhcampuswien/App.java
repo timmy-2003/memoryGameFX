@@ -26,9 +26,11 @@ public class App extends Application {
         TextField textField1 = (TextField) scene2.lookup("#Textfield_1");
         TextField textField2 = (TextField) scene2.lookup("#Textfield_2");
         ChoiceBox<String> themeSelector = (ChoiceBox<String>) scene2.lookup("#themeSelector");
+        themeSelector.getSelectionModel().select(0);
         themeSelector.getItems().addAll("Christmas", "Flags");
         GameController controller = fxmlLoader1.getController(); //liefert controller zurück
         startButton.setOnAction(e -> {
+            controller.selectTheme(themeSelector.getSelectionModel().getSelectedIndex());
             controller.getMemory().getPlayer1().setName(textField1.getText());
             controller.getMemory().getPlayer2().setName(textField2.getText());
             controller.updateHeaderLabel();

@@ -107,6 +107,9 @@ public class GameController {
 
     @FXML
     public void clickNewGame() { //Ein Klick auf den New-Game-Button ruft diese Methode auf. Das Spiel fängt von neuem an.
+       timer.cancel();
+       timer = new Timer();
+       timerRunning = false;
         memory.newGame();
         for (int i = 0; i < buttons.length; i++) {   //Refresht alle Buttons
             refreshButton(i);
@@ -131,5 +134,20 @@ public class GameController {
 
     public Memory getMemory() {
         return memory;
+    }
+
+    public void selectTheme(int themeIndex){       // Die Themes sind unter einer Nummer gespeichert. Erzeugt ein neues Memory mit der angewählten Theme.
+        switch (themeIndex){
+            default:
+            case 0:
+                memory = new Memory(christmas);
+                break;
+            case 1:
+                memory = new Memory(countries);
+                break;
+
+        }
+
+        clickNewGame();
     }
 }
