@@ -33,7 +33,7 @@ public class GameController {
             "flag (28).png", "flag (29).png", "flag (30).png", "flag (31).png", "flag (32).png", "flag (33).png", "flag (34).png", "flag (35).png", "flag (36).png", "flag (37).png", "flag (38).png", "flag (39).png", "flag (40).png", "flag (41).png", "flag (42).png", "flag (43).png", "flag (44).png"};
 
     @FXML
-    public void initialize() {//diese Methode wird ausgeführt, sobald das GUI geladen ist
+    public void initialize() {
         buttons = new Button[Grid_Memory.getRowCount() * Grid_Memory.getColumnCount()];
         memory = new Memory(countries);
 
@@ -41,39 +41,42 @@ public class GameController {
         updatePoints();
         newGameButton.setText("New game!");
         memory.newGame();
-        for (int rows = 0; rows < Grid_Memory.getRowCount(); rows++) {  //befüllt beliebig großes Grid mit Buttons
+        for (int rows = 0; rows < Grid_Memory.getRowCount(); rows++) {  // fills a grid with buttons
             for (int columns = 0; columns < Grid_Memory.getColumnCount(); columns++) {
                 Button button = new Button();
                 Grid_Memory.add(button, columns, rows);
                 button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // button fills cell
                 button.setOnAction(actionEvent -> {
-                    Button eventButton = (Button) actionEvent.getSource(); //findet den Button, der gedrückt wurde
+                    Button eventButton = (Button) actionEvent.getSource(); // finds the button that was clicked
 
                     int buttonIndex = Integer.parseInt(eventButton.getId());
                     if (!timerRunning) {
                         clickOnButton(buttonIndex);
                     }
 
-
-                }); // was passieren soll, wenn man auf den Button clickt
-                button.setId(String.valueOf(columns + rows * Grid_Memory.getColumnCount())); // Button bekommt ID zugewiesen, die dem Index entspricht
+                });
+                button.setId(String.valueOf(columns + rows * Grid_Memory.getColumnCount())); // each button gets an ID that corresponds to its index
                 buttons[columns + rows * Grid_Memory.getColumnCount()] = button;
                 refreshButton(columns + rows * Grid_Memory.getColumnCount());
             }
         }
     }
 
-    public void clickOnButton(int buttonIndex) { // buttonIndex = "Position" des angeklickten Buttons auf dem Spielfeld
+    /**
+     * @param buttonIndex is used to identify the button that was clicked
+     * a timer is used to show two non-matching cards to the player for one second
+     */
+    public void clickOnButton(int buttonIndex) {
 
         memory.selectCard(buttonIndex);
         if (memory.getFirstSelectedCard() != null && memory.getSecondSelectedCard() != null) {
             if (memory.checkIfMatch(memory.getCurrentPlayer(), memory.getFirstSelectedCard(), memory.getSecondSelectedCard())) {
                 memory.resetFirstSelectedCard();
                 memory.resetSecondSelectedCard();
-                updatePoints(); // Wenn die Karten identisch sind, werden die Karten zurückgesetzt und der Punktestand aktualisiert
+                updatePoints(); // If the cards match, the points are updated
             } else {
                 timerRunning = true;
-                timer.schedule(new TimerTask() { //Timer, um das Zudecken zweier nicht-identischen Spielkarten um eine Sekunde zu verzögern
+                timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         Platform.runLater(() -> {
@@ -96,39 +99,48 @@ public class GameController {
         updateHeaderLabel();
     }
 
-    public void refreshButton(int index) {   //synchronisiert den Zustand der Karte, Logik über den zustand(wann Vorderseite, wann Rückseite angezeigt werden soll)
+
+    /**
+     * refreshButton synchronises the state of the card and correspondingly shows either the front or rear of the card at a specified index
+     *
+     * @param index specifies the location of the button
+     */
+    public void refreshButton(int index) {
         Card card = memory.getBoard().getCard(index);
         if (memory.getBoard().isOpen(index)) {
             buttons[index].setGraphic(new ImageView(card.getFront()));
         } else {
-            buttons[index].setGraphic(new ImageView(card.getBackground()));
+            buttons[index].setGraphic(new ImageView(card.getRear()));
         }
     }
 
+    /**
+     * clickNewGame is called when the game-reset button is clicked
+     */
     @FXML
-    public void clickNewGame() { //Ein Klick auf den New-Game-Button ruft diese Methode auf. Das Spiel fängt von neuem an.
-       timer.cancel();
-       timer = new Timer();
-       timerRunning = false;
+    public void clickNewGame() {
+        timer.cancel();
+        timer = new Timer();
+        timerRunning = false;
         memory.newGame();
-        for (int i = 0; i < buttons.length; i++) {   //Refresht alle Buttons
+        for (int i = 0; i < buttons.length; i++) {
             refreshButton(i);
         }
         updateHeaderLabel();
         updatePoints();
     }
 
-    public void updateHeaderLabel() { //Methode steuert das obere Text-Label (Anzeige des aktuellen Spielers + Benachrichtigung, wenn das Spiel beendet ist
+    public void updateHeaderLabel() { // method controls the header label
         label_CurrentPlayer.setText(memory.getCurrentPlayer().getName() + ", it's your turn!");
         if (memory.checkIfEnd()) {
             label_CurrentPlayer.setText(memory.checkWhoWon());
         }
     }
 
-    public void updatePoints() { //Methode steuert diejenigen Label, die für den Punktestand zuständig sind
+    public void updatePoints() { // responsible for displaying the points on the GUI
 
-        label_PlayerOneScore.setText(memory.getPlayer1().getName() + ": " + String.valueOf(memory.getPlayer1().getPoints()));
-        label_PlayerTwoScore.setText(memory.getPlayer2().getName() + ": " + String.valueOf(memory.getPlayer2().getPoints()));
+        label_PlayerOneScore.setText(memory.getPlayer1().getName() + ": " + memory.getPlayer1().getPoints());
+        label_PlayerTwoScore.setText(memory.getPlayer2().getName() + ": " + memory.getPlayer2().getPoints());
 
     }
 
@@ -136,8 +148,13 @@ public class GameController {
         return memory;
     }
 
-    public void selectTheme(int themeIndex){       // Die Themes sind unter einer Nummer gespeichert. Erzeugt ein neues Memory mit der angewählten Theme.
-        switch (themeIndex){
+    /**
+     * allows the user to choose the card theme, Christmas is chosen by default (in case the user doesn't select anything)
+     *
+     * @param themeIndex is the index (order) by which the different choices appear in the FX ChoiceBox
+     */
+    public void selectTheme(int themeIndex) {
+        switch (themeIndex) {
             default:
             case 0:
                 memory = new Memory(christmas);

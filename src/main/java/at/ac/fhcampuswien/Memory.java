@@ -3,64 +3,71 @@ package at.ac.fhcampuswien;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class Memory {
-    private Board board;
-    private Player player1;
-    private Player player2;
+    private final Board board;
+    private final Player player1;
+    private final Player player2;
     private Player currentPlayer;
-    private Card[] memoryCards; //alle Karten des Spiels
+    private final Card[] memoryCards;
     private Card firstSelectedCard;
     private int firstSelectedIndex;
     private Card secondSelectedCard;
     private int secondSelectedIndex;
 
-    public Memory(String[] images) { //Konstruktor, dem die Dateinamen der Bilder als String [] übergeben werden
+    /**
+     * @param images is a String array containing the file names of the images used
+     */
+
+    public Memory(String[] images) {
         this.board = new Board();
-        player1 = new Player(new ArrayList<>(), 0); // Zwei Spieler anlegen mit Punktestand 0 und leerer Liste an gesammelten Karten (Beginn des Spiels)
+        player1 = new Player(new ArrayList<>(), 0); // Create two players with an empty list of collected cards and 0 points
         player2 = new Player(new ArrayList<>(), 0);
 
 
-        int OneOrTwo = Utilities.randomGenerator(2); // Zufall bestimmt, wer zuerst drankommt
+        int OneOrTwo = Utilities.randomGenerator(2); // First player is selected by random choice
         if (OneOrTwo == 1)
             currentPlayer = player1;
         else
             currentPlayer = player2;
 
 
-        memoryCards = new Card[images.length]; // memoryCards (alle Karten des Spiels) wird mit Karten befüllt
+        memoryCards = new Card[images.length]; // memoryCards is filled with cards
         for (int i = 0; i < images.length; i++) {
-            Image front = new Image(App.class.getResource(images[i]).toString(), 80, 120, true, true);
+            Image front = new Image(Objects.requireNonNull(App.class.getResource(images[i])).toString(), 80, 120, true, true);
             Card card = new Card(front);
             memoryCards[i] = card;
         }
 
     }
 
-    public void newGame() {   //verteilt Karten auf Brett
+    /**
+     * newGame "shuffles" the cards and places the cards into the slots
+     */
 
-        int OneOrTwo = Utilities.randomGenerator(2); // Zufall bestimmt, wer zuerst drankommt
+    public void newGame() {
+
+        int OneOrTwo = Utilities.randomGenerator(2); // First player is selected by random choice
         if (OneOrTwo == 1)
             currentPlayer = player1;
         else
             currentPlayer = player2;
 
-        ArrayList<Card> cardList = new ArrayList<>();  //die Karten welche auf dem Feld landen
-        for (int i = 0; i < memoryCards.length; i++) {
-            cardList.add(memoryCards[i]);
-        }
+        ArrayList<Card> cardList = new ArrayList<>(Arrays.asList(memoryCards));
 
-        ArrayList<Integer> slots = new ArrayList<>(); //enthält alle Slot-"Adressen"
+        ArrayList<Integer> slots = new ArrayList<>(); // numbers the slots
         for (int i = 0; i < board.getCardCount(); i++) {
             slots.add(i);
         }
 
         for (int i = 0; i < board.getCardCount() / 2; i++) {
             Card card = cardList.remove(Utilities.randomGenerator(cardList.size()));
-            Integer slot1 = slots.remove(Utilities.randomGenerator(slots.size()));          //dieser Eintrag wird aus der Liste gelöscht, dadurch kann er nicht doppelt vorkommen
+            Integer slot1 = slots.remove(Utilities.randomGenerator(slots.size()));          // to prevent double pairs, slots are removed
             Integer slot2 = slots.remove(Utilities.randomGenerator(slots.size()));
 
-            board.setCard(slot1, card);            //Eine Karte wird auf 2 Stellen des Bretts gesetzt
+            board.setCard(slot1, card);            // one card ís placed into two slots
             board.setCard(slot2, card);
             board.setCardState(slot1, false);
             board.setCardState(slot2, false);
@@ -75,19 +82,32 @@ public class Memory {
 
     }
 
-    public boolean checkIfMatch(Player p, Card firstSelectedCard, Card secondSelectedCard) { //Fügt bei einem Match die gesammelten Karten zum Player hinzu, aktualisiert die Punkte
-        // kommt es nicht zu einem Match, wird false zurückgeliefert
+    /**
+     * @param p                  Player whose selected cards need to be checked
+     * @param firstSelectedCard  first card that was clicked by the player
+     * @param secondSelectedCard second card that was clicked by the player
+     * @return true if they match, false if they don't match
+     * add the matching cards two the collectedCards list of the player
+     */
+
+    public boolean checkIfMatch(Player p, Card firstSelectedCard, Card secondSelectedCard) {
         if (firstSelectedCard.equals(secondSelectedCard)) {
             p.getCollectedCards().add(firstSelectedCard);
             p.getCollectedCards().add(secondSelectedCard);
-            p.setPoints(); // Punkte werden anhand der Anzahl der gesammelten Karten berechnet, daher müssen zuerst die Karten hinzugefügt, und erst dann die Punkte aktualisiert werden
+            p.setPoints(); // set points (points are calculated by dividing the collected cards by two)
             return true;
         } else {
             return false;
         }
     }
 
-    public void selectCard(int index) { //die Logik die passiert, wenn man eine Karte anwählt
+    /**
+     * selectCard determines whether a button click is the first or second selected card
+     *
+     * @param index index of the button clicked by the player
+     */
+
+    public void selectCard(int index) {
         if (board.isOpen(index)) {
             return;
         }
@@ -96,16 +116,22 @@ public class Memory {
             return;
         }
         if (firstSelectedCard == null) {
-            firstSelectedCard = board.getCard(index);  //Speichert die vom Spieler ausgewählten Karten in zwei Variablen
+            firstSelectedCard = board.getCard(index);  // save the selected cards in two variables
             firstSelectedIndex = index;
         } else {
             secondSelectedCard = board.getCard(index);
             secondSelectedIndex = index;
         }
-        board.setCardState(index, true); // Kartenzustand wird aktualisiert, da die Karte ja jetzt aufgedeckt ist --> Das ist notwendig, damit die Methode refreshButton die Karte "umdrehen" kann
+        board.setCardState(index, true); // update the card state to true
     }
 
-    public boolean checkIfEnd() {        // Überprüft, ob das Spiel aus ist, indem die Kartenzustände (true = aufgedeckt, false = zugedeckt) kontrolliert werden
+    /**
+     * checks if the game is over by looping through the card state
+     *
+     * @return false as soon as it finds a card that is still face down, otherwise return true
+     */
+
+    public boolean checkIfEnd() {
         for (int i = 0; i < board.getCardCount(); i++) {
             if (!board.isOpen(i)) {
                 return false;
@@ -114,12 +140,12 @@ public class Memory {
         return true;
     }
 
-    public Player getCurrentPlayer() { // Liefert den aktuellen Spieler zurück
+    public Player getCurrentPlayer() {
         return currentPlayer;
 
     }
 
-    public void switchPlayer() { //Methode führt einen Spielerwechsel aus
+    public void switchPlayer() { // perform a player switch
         if (currentPlayer == player1) {
             currentPlayer = player2;
         } else {
@@ -127,7 +153,12 @@ public class Memory {
         }
     }
 
-    public String checkWhoWon() { // Methode liefert den Text zurück, der am Ende des Spiels angezeigt werden soll (Gewinner oder Gleichstand)
+    /**
+     * checkWhoWon checks who has more points
+     *
+     * @return the String that is displayed in the header label at the end of the game
+     */
+    public String checkWhoWon() {
         if (player1.getPoints() > player2.getPoints()) {
             return player1.getName() + " has won the game!";
         }
@@ -140,7 +171,7 @@ public class Memory {
 
     public void resetFirstSelectedCard() {
         firstSelectedCard = null;
-    } // Karten werden auf null zurückgesetzt, damit der Speicher für die Karten wieder verwendet werden kann
+    } // cards are reset to null
 
     public void resetSecondSelectedCard() {
         secondSelectedCard = null;
@@ -156,7 +187,7 @@ public class Memory {
 
     public Player getPlayer1() {
         return player1;
-    }           //Diverse getter-Methoden für den Controller
+    }
 
     public Player getPlayer2() {
         return player2;

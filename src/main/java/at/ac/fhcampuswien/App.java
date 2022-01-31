@@ -7,13 +7,18 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.util.Objects;
+
+/**
+ * The App Class loads the fxml files to open the GUI and describes some basic functionality such as switching between two scenes
+ */
 
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource("Game_UI.fxml")); //macht GUI aus FXML file
+        FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource("Game_UI.fxml"));
         FXMLLoader fxmlLoader2 = new FXMLLoader(App.class.getResource("startscreen.fxml"));
 
         Scene scene1 = new Scene(fxmlLoader1.load(), 800, 640);
@@ -28,7 +33,7 @@ public class App extends Application {
         ChoiceBox<String> themeSelector = (ChoiceBox<String>) scene2.lookup("#themeSelector");
         themeSelector.getSelectionModel().select(0);
         themeSelector.getItems().addAll("Christmas", "Flags");
-        GameController controller = fxmlLoader1.getController(); //liefert controller zurück
+        GameController controller = fxmlLoader1.getController(); // load the controller class of scene1 to be able to pass info between scenes
         startButton.setOnAction(e -> {
             controller.selectTheme(themeSelector.getSelectionModel().getSelectedIndex());
             controller.getMemory().getPlayer1().setName(textField1.getText());

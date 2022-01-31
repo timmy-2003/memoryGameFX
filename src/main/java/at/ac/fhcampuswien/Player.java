@@ -3,18 +3,19 @@ package at.ac.fhcampuswien;
 import java.util.ArrayList;
 
 public class Player {
-    private ArrayList<Card> collectedCards; // In der ArrayList werden alle vom Spieler gesammelten Kartenpaare gespeichert
+    private final ArrayList<Card> collectedCards; // ArrayList contains the cards collected by the player
     private int points;
     private String name;
 
-    public Player(ArrayList<Card> collectedCards, int points) { // Konstruktor
+
+    public Player(ArrayList<Card> collectedCards, int points) {
         this.collectedCards = collectedCards;
         this.points = points;
     }
 
     public void setPoints() {
         this.points = this.collectedCards.size() / 2;
-    } // Punktezahl berechnet sich aus Anzahl der gesammelten Karten durch zwei dividiert
+    } // points are calculated by dividing the amount of collected cards by 2
 
     public int getPoints() {
         return points;
@@ -32,7 +33,7 @@ public class Player {
         this.name = newName;
     }
 
-    public void resetButKeepName() {    // Setzt den Spieler für neues Spiel zurück
+    public void resetButKeepName() {    // reset points and collectedCards, but don't reset the name (name is set by user input)
         this.collectedCards.clear();
         this.points = 0;
     }

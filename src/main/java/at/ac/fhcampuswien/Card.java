@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public class Card {
 
-    private Image front;
-    private static Image rear = new Image(Objects.requireNonNull(App.class.getResourceAsStream("backOfCard.png")), 60, 100, true, true); //Kartenrückseite
+    private final Image front;
+    private static final Image rear = new Image(Objects.requireNonNull(App.class.getResourceAsStream("backOfCard.png")), 60, 100, true, true);
 
     public Card(Image front) {
         this.front = front;
@@ -17,7 +17,7 @@ public class Card {
         return front;
     }
 
-    public Image getBackground() {
+    public Image getRear() {
         return rear;
     }
 }
