@@ -1,9 +1,4 @@
-### Infos 
-Wie ihr das Spiel zum Laufen bekommt: Am rechten Rand von IntelliJ auf Gradle klicken -> Tasks -> application -> run
+Welcome to our memory game!
 
-Die Spielernamen könnt ihr in der Klasse Memory beim Konstruktoraufruf verändern --> in der finalen Version wird das wahrscheinlich als Userinput im Spiel eingebaut sein
-
-
-
-Viel Spaß beim Testen!
+To start the game in IntelliJ, click the Gradle tab on the right hand side of the screen, then click Tasks -> Application -> run.
 
